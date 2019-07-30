@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import session.TokenSessionBeanLocal;
 import session.UserSessionBeanLocal;
 
 /**
@@ -19,6 +20,8 @@ import session.UserSessionBeanLocal;
  */
 public class LoginServlet extends HttpServlet {
     //Alt + Call Enterpride Bean
+    @EJB
+    private TokenSessionBeanLocal tokenSessionBean;
     @EJB
     private UserSessionBeanLocal userSessionBean;
 
@@ -40,7 +43,7 @@ public class LoginServlet extends HttpServlet {
         if (userSessionBean.login(username, password)) {
             HttpSession session = request.getSession();
             session.setAttribute("welcome", username);
-           
+            request.setAttribute("items", tokenSessionBean.getAll());
             request.getRequestDispatcher("tokenview.jsp").forward(request, response);
         }else{
             request.setAttribute("ERROR", "Login invalid!");

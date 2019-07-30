@@ -14,5 +14,6 @@
         
         <!-- Quan tri he thong -->
         <mapping class="entity.User"/>
+        <mapping class="entity.Token"/>
     </session-factory>
 </hibernate-configuration>
